@@ -30,20 +30,25 @@ def main():
 
     if "I" in ievade: # Ja ievadītajā tekstā ir "I", tad 
         number = int(input()) # ievada elementu skaitu, cik  būs kokā
-        
+        data = list(map(int, input().split()))
+        assert len(data) == number    
 
     if "F" in ievade: # Ja ievadītajā tekstā ir "F", tad 
         ievade = "tests/" + input() # nolasa visu ievadīto ceļu līdz failam,
         with open(ievade, 'r') as file: # nolasa faila saturu un aizver to,
             number = int(file.readline().strip())  # pēc tam nolasa pirmo rindu un pārveido to par Integer jeb skaitli, kas norāda, cik elemntu būs kokā
-            
+            data = list(map(int, file.readline().strip().split()))
+            assert len(data) == number
 
-    # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
+    if not ievade: # Ja ievade ir tukša, tad izvada kļūdas ziņojumu
+        print("Kļūdas ziņojums: ievade nevar būt tukša!")
+        return
+    
+    #n = int(input()) # input from keyboard
+    #data = list(map(int, input().split()))
 
     # checks if lenght of data is the same as the said lenght
-    assert len(data) == n
+    #assert len(data) == n
 
     # calls function to assess the data 
     # and give back all swaps
@@ -51,7 +56,7 @@ def main():
 
     # TODO: output how many swaps were made, 
     # this number should be less than 4n (less than 4*len(data))
-    print(elements_swaps)
+    #print(elements_swaps)
 
     # output all swaps
     print(len(swaps))
