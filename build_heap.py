@@ -1,5 +1,6 @@
-# Anastasija Bondare 221RDB395
 # python3
+# 221RDB395 Anastasija Bondare 13.grupa
+
 
 def build_heap(data):
     n = len(data) # Jauns mainīgais n, kas satur saraksta "data" garumu
