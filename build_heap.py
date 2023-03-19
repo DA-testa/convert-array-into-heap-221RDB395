@@ -7,39 +7,41 @@ def build_heap(data):
 
     for i in range(n // 2, -1, -1): # Cikls sākas no viduspunkta līdz 0 ar soli -1
         smallest = i
-        left = 2 * i + 1 # Nosaka kreisā bērna pozīciju binārā koka struktūrā
-        right = 2 * i + 2 
+        left_child = 2 * i + 1 # Nosaka kreisā bērna pozīciju binārā koka struktūrā
+        right_child = 2 * i + 2 
 
-        if left < n and data[left] < data[smallest]: # Pārbauda, vai kreisā bērna pozīcija neatrodas ārpus koka un 
+        if left_child < n and data[left_child] < data[smallest]: # Pārbauda, vai kreisā bērna pozīcija neatrodas ārpus koka un 
         # pārbauda, vai bērna vērtība ir mazāka par pašreizējā mezgla vērtību.
-            smallest = left # Tiek piešķirts mainīgajam "smallest" kreisā bērna pozīcijas indekss.
+            smallest = left_child # Tiek piešķirts mainīgajam "smallest" kreisā bērna pozīcijas indekss.
 
-        if right < n and data[right] < data[smallest]:
-            smallest = right
+        if right_child < n and data[right_child] < data[smallest]:
+            smallest = right_child
 
         if smallest != i: # Ja mezgls ar mazāko vērtību atšķiras no pašreizējā mezgla, tad
             swaps.append((i, smallest)) # pievieno sarakstam elementa pārus, kuru mezglu indeksi tika nomainīti
             data[i], data[smallest] = data[smallest], data[i] # Maina pašreizējo mezglu ar mezglu, kuram ir mazākā vērtība.
-            s = smallest # Jaunajam mainigajam piešķir mazākā mezgla vērtību
-            k = s # Un citam mainīgajam piešķir arī mazākā mezgla vērtību
+            first_smallest = smallest # Jaunajam mainīgajam piešķir mazākā mezgla vērtību
+            r = 2 * first_smallest + 2
+            l = 2 * first_smallest + 1
+            s = first_smallest # Un citam mainīgajam piešķir arī mazākā mezgla vērtību
 
-            while 2 * s + 2 < n: # Pārbauda, vai labā bērna elements ir mazāks par kopējo elementu skaitu
-                if data[2 * s + 2] < data[k]: # Ja labā bērna indekss ir mazāks par mazākā mezgla indeksu, tad
-                    k = 2 * s + 2 # k tiek atjaunots kā labā bērna indekss
-                if data[2 * s + 1] < data[k]:
-                    k = 2 * s + 1
-                if k != s: # Ja indeksi nesakrīt, tad tiek atrast jauns mazākais elements
-                    swaps.append((s, k)) # Jauns pāris tiek pievienots sarakstam
-                    data[s], data[k] = data[k], data[s] # Un tad notiek mezglu vērtību maiņa starp s un k, 
-                    s = k # Mainīgajam s tiek piešķirts mainīgā k indekss.
+            while r < n: # Pārbauda, vai labā bērna elements ir mazāks par kopējo elementu skaitu
+                if data[r] < data[s]: # Ja labā bērna indekss ir mazāks par mazākā mezgla indeksu, tad
+                    s = r # e tiek atjaunots kā labā bērna indekss
+                if data[l] < data[s]:
+                    s = l
+                if s != first_smallest: # Ja indeksi nesakrīt, tad tiek atrast jauns mazākais elements
+                    swaps.append((first_smallest, s)) # Jauns pāris tiek pievienots sarakstam
+                    data[first_smallest], data[s] = data[s], data[first_smallest] # Un tad notiek mezglu vērtību maiņa starp s un k, 
+                    first_smallest = s # Mainīgajam s tiek piešķirts mainīgā k indekss.
                 else:
                     break
 
-            if 2 * s + 1 < n and data[2 * s + 1] < data[k]: # Pārbauda, vai kreisā bērna elements ir mazāks par kopējo elementu skaitu 
+            if l < n and data[l] < data[s]: # Pārbauda, vai kreisā bērna elements ir mazāks par kopējo elementu skaitu 
             # un ir mazāks par pašreizējo mazāko elementu
-                k = 2 * s + 1 # Ja iepriekšējie nosacījumi tika izpildīti, tad mainīgais k tiek atjaunots ar kreisā bērna indeksu
-                swaps.append((s, k)) # Jauns pāris tiek pievienots sarakstam
-                data[s], data[k] = data[k], data[s] # Un tad notiek mezglu vērtību maiņa starp s un k
+                s = l # Ja iepriekšējie nosacījumi tika izpildīti, tad mainīgais k tiek atjaunots ar kreisā bērna indeksu
+                swaps.append((first_smallest, s)) # Jauns pāris tiek pievienots sarakstam
+                data[first_smallest], data[s] = data[s], data[first_smallest] # Un tad notiek mezglu vērtību maiņa starp s un k
 
     return swaps # Atgriež sarakstu, kas satur informācīju par nomainītajiem elementiem
 
